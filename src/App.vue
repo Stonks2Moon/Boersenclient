@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="boersenclient">
     <router-view />
   </div>
 </template>
@@ -20,16 +20,42 @@ html {
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
 }
-
-body {
+html {
   background: $background;
   color: $color;
+  @media #{$isDark} {
+    background: $background_dark;
+    color: $color_dark;
+  }
+}
+body {
+  min-height: 100vh;
   margin: 0;
 }
+
+[center] {
+  text-align: center;
+}
+
+[error] {
+  color: $error;
+}
+
+[huge] {
+  font-size: 40px;
+}
+
 [content] {
-  padding: 20px 5vw calc(20px + env(safe-area-inset-bottom));
-  @media #{$isMobile} {
-    padding-bottom: calc(70px + env(safe-area-inset-bottom));
-  }
+  padding: calc(20px + env(safe-area-inset-top)) 5vw
+    calc(20px + env(safe-area-inset-bottom));
+}
+
+[max-width] {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+[line-break] {
+  white-space: pre-line;
 }
 </style>

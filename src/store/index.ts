@@ -1,22 +1,35 @@
 /* eslint-disable */
+import { IBroker } from '@/utils/inerfaces';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
+
 const store = new Vuex.Store({
   state: {
-    a: 1,
+    user: {} as IBroker,
+    userValidated: false
   },
   getters: {
-    a: (state: any): number => {
-      return state.a;
+    valid: (state: any): boolean => {
+      return state.userValidated;
     },
+    user: (state: any): IBroker => {
+      return state.user;
+    }
   },
   mutations: {
-    updateA(state: any, a: number) {
-      state.a = a;
+    signOut(state: any) {
+      state.userValidated = false;
+      state.user = undefined;
     },
-  },
+    signIn(state: any, user: IBroker) {
+      if (user && user.type === 'stockmarket') {
+        state.user = user;
+        state.userValidated = true;
+      }
+    }
+  }
 });
 
 export default store;
