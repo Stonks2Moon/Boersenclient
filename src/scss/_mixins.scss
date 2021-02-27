@@ -96,3 +96,28 @@
     }
   }
 }
+
+@mixin muscle-colors {
+  path {
+    fill: $color;
+    @media #{$isDark} {
+      fill: $color_dark;
+    }
+
+    &[ignore] {
+      opacity: .5;
+    }
+
+    &[highlight] {
+      fill: $success;
+    }
+
+    &:not([ignore]) {
+      transition: .2s ease-in-out;
+      cursor: pointer;
+      &:hover {
+        fill: $success;
+      }
+    }
+  }
+}
