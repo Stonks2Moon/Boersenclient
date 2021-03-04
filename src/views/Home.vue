@@ -7,7 +7,7 @@
           icon="user-shield-duo"
           title="tokens"
           subtitle="create, delete and manage access tokens"
-          :to="{ name: 'home' }"
+          :to="{ name: 'tokens' }"
         />
 
         <BNavigationCard
@@ -50,6 +50,13 @@
           title="statistics"
           subtitle="tbd"
           :to="{ name: 'home' }"
+        />
+
+        <BNavigationCard
+          icon="cocktail"
+          title="Market Tester"
+          subtitle="hehe, will be removed"
+          :to="{ name: 'market-tester' }"
         />
       </tl-grid>
     </div>

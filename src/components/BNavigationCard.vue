@@ -25,7 +25,11 @@ export default class BNavigationCard extends Vue {
 .boerse-navigation-card {
   text-decoration: none;
   color: inherit;
-  background-color: $color;
+
+  background-color: $color_dark;
+  @media #{$isDark} {
+    background-color: $color;
+  }
   background-image: url('/assets/navigation-card-bg.png');
   background-position: top right;
   background-repeat: no-repeat;
@@ -41,6 +45,7 @@ export default class BNavigationCard extends Vue {
   .subtitle {
     opacity: 0.5;
     transition: 0.2s ease-in-out;
+    font-size: 14px;
   }
 
   transition: 0.2s ease-in-out;

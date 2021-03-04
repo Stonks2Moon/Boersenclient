@@ -20,6 +20,8 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
     store.commit('signIn', getUserFromJWT());
   }
 
+  // next();
+
   if (to.name !== 'login' && !store.getters.valid) {
     await next({ name: 'login' });
   } else if (to.name === 'login' && store.getters.valid) {

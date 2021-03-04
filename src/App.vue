@@ -1,13 +1,18 @@
 <template>
   <div class="boersenclient">
-    <router-view />
+    <BRouter />
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import BRouter from './components/BRouter.vue';
 
-@Component
+@Component({
+  components: {
+    BRouter
+  }
+})
 export default class App extends Vue {}
 </script>
 
@@ -21,9 +26,11 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 html {
+  @include custom-scrollbar__light();
   background: $background;
   color: $color;
   @media #{$isDark} {
+    @include custom-scrollbar__dark();
     background: $background_dark;
     color: $color_dark;
   }

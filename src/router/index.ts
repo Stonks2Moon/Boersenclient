@@ -20,6 +20,22 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/tokens',
+      name: 'tokens',
+      component: () => import('@/views/Tokens.vue'),
+      meta: {
+        title: prefix + 'Tokens'
+      }
+    },
+    {
+      path: '/market-tester',
+      name: 'market-tester',
+      component: () => import('@/views/MarketTester.vue'),
+      meta: {
+        title: prefix + 'Market Tester'
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/Login.vue'),
