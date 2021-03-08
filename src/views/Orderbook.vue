@@ -1,43 +1,43 @@
 <template>
   <div class="view-orderbook" content>
-    <div max-width>
-      <h1>Orderbook</h1>
-      <template v-if="shares">
-        <div v-for="s in shares" :key="s.id">
-          <tl-flow horizontal="space-between">
-            <h3>{{ s.name }}</h3>
-            <h4>{{ s.price }} €</h4>
-          </tl-flow>
-          <tc-table :dark="true">
-            <tc-tr key="a">
-              <tc-th>Datum</tc-th>
-              <tc-th>Anzahl</tc-th>
-              <tc-th>Preis</tc-th>
-              <tc-th>Anzahl</tc-th>
-              <tc-th>Datum</tc-th>
-            </tc-tr>
-            <tc-tr v-for="so in getSellOrders(s.id)" :key="so.id">
-              <tc-td></tc-td>
-              <tc-td></tc-td>
-              <tc-td :tfcolor="so.limit ? 'error' : 'alarm'">
-                {{ so.limit || 'Market' }}
-              </tc-td>
-              <tc-td tfcolor="error">{{ so.amount }}</tc-td>
-              <tc-td>{{ formatTime(so.timestamp) }}</tc-td>
-            </tc-tr>
-            <tc-tr v-for="bo in getBuyOrders(s.id)" :key="bo.id">
-              <tc-td>{{ formatTime(bo.timestamp) }}</tc-td>
-              <tc-td tfcolor="success">{{ bo.amount }}</tc-td>
-              <tc-td :tfcolor="bo.limit ? 'success' : 'alarm'">
-                {{ bo.limit || 'Market' }}
-              </tc-td>
-              <tc-td></tc-td>
-              <tc-td></tc-td>
-            </tc-tr>
-          </tc-table>
-        </div>
-      </template>
-    </div>
+    <h1>Orderbook</h1>
+    <template v-if="shares">
+      <div v-for="s in shares" :key="s.id">
+        <tl-flow horizontal="space-between">
+          <h3>{{ s.name }}</h3>
+          <h4>{{ s.price }} €</h4>
+        </tl-flow>
+        <tc-table :dark="true">
+          <tc-tr key="a">
+            <tc-th>Datum</tc-th>
+            <tc-th>Anzahl</tc-th>
+            <tc-th>Preis</tc-th>
+            <tc-th>Anzahl</tc-th>
+            <tc-th>Datum</tc-th>
+          </tc-tr>
+          <tc-tr v-for="so in getSellOrders(s.id)" :key="so.id">
+            <tc-td></tc-td>
+            <tc-td></tc-td>
+            <tc-td :tfcolor="so.limit ? 'error' : 'alarm'">
+              {{ so.limit || 'Market' }}
+            </tc-td>
+            <tc-td tfcolor="error">{{ so.amount }}</tc-td>
+            <tc-td>{{ formatTime(so.timestamp) }}</tc-td>
+          </tc-tr>
+          <tc-tr v-for="bo in getBuyOrders(s.id)" :key="bo.id">
+            <tc-td>{{ formatTime(bo.timestamp) }}</tc-td>
+            <tc-td tfcolor="success">{{ bo.amount }}</tc-td>
+            <tc-td :tfcolor="bo.limit ? 'success' : 'alarm'">
+              {{ bo.limit || 'Market' }}
+            </tc-td>
+            <tc-td></tc-td>
+            <tc-td></tc-td>
+          </tc-tr>
+        </tc-table>
+      </div>
+    </template>
+
+    <br /><br /><br /><br /><br />
   </div>
 </template>
 

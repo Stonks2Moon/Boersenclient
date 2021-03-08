@@ -16,7 +16,10 @@ const router = new VueRouter({
       name: 'home',
       component: () => import('@/views/Home.vue'),
       meta: {
-        title: prefix + 'Home'
+        title: prefix + 'Home',
+        nav: {
+          title: 'Home'
+        }
       }
     },
     {
@@ -24,7 +27,12 @@ const router = new VueRouter({
       name: 'tokens',
       component: () => import('@/views/Tokens.vue'),
       meta: {
-        title: prefix + 'Tokens'
+        title: prefix + 'Tokens',
+        nav: {
+          title: 'Tokens',
+          prevName: 'home',
+          prevTitle: 'Home'
+        }
       }
     },
     {
@@ -32,7 +40,12 @@ const router = new VueRouter({
       name: 'orderbook',
       component: () => import('@/views/Orderbook.vue'),
       meta: {
-        title: prefix + 'Orderbook'
+        title: prefix + 'Orderbook',
+        nav: {
+          title: 'Orderbook',
+          prevName: 'home',
+          prevTitle: 'Home'
+        }
       }
     },
     {
@@ -40,7 +53,12 @@ const router = new VueRouter({
       name: 'assets',
       component: () => import('@/views/Assets.vue'),
       meta: {
-        title: prefix + 'Assets'
+        title: prefix + 'Assets',
+        nav: {
+          title: 'Assets',
+          prevName: 'home',
+          prevTitle: 'Home'
+        }
       }
     },
     {
@@ -48,7 +66,12 @@ const router = new VueRouter({
       name: 'market-tester',
       component: () => import('@/views/MarketTester.vue'),
       meta: {
-        title: prefix + 'Market Tester'
+        title: prefix + 'Market Tester',
+        nav: {
+          title: 'Market Tester',
+          prevName: 'home',
+          prevTitle: 'Home'
+        }
       }
     },
     {
@@ -56,7 +79,7 @@ const router = new VueRouter({
       name: 'login',
       component: () => import('@/views/Login.vue'),
       meta: {
-        title: prefix + 'Home'
+        title: prefix + 'Login'
       }
     },
     {

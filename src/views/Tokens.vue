@@ -1,8 +1,7 @@
 <template>
   <div class="view-tokens" content>
-    <div max-width>
-      <h1>Tokens</h1>
-    </div>
+    <h1>Tokens</h1>
+    Hello There
   </div>
 </template>
 

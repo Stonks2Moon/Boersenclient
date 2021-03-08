@@ -26,10 +26,7 @@ export default class BNavigationCard extends Vue {
   text-decoration: none;
   color: inherit;
 
-  background-color: $color_dark;
-  @media #{$isDark} {
-    background-color: $color;
-  }
+  background-color: $color;
   background-image: url('/assets/navigation-card-bg.png');
   background-position: top right;
   background-repeat: no-repeat;
@@ -37,6 +34,7 @@ export default class BNavigationCard extends Vue {
 
   border-radius: $border-radius;
   padding: 20px;
+
   .title {
     font-weight: bold;
     text-transform: uppercase;

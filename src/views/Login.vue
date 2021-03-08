@@ -48,6 +48,10 @@ export default class Login extends Vue {
   display: grid;
   place-content: center;
 
+  [content] {
+    padding-top: calc(20px + env(safe-area-inset-top));
+  }
+
   .login-container {
     display: flex;
     flex-direction: column;

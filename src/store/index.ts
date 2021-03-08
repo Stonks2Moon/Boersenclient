@@ -28,21 +28,24 @@ const store = new Vuex.Store({
       state.userValidated = false;
       state.user = undefined;
     },
-    signIn(state: any, user: IBroker) {
+    async signIn(state: any, user: IBroker) {
       if (user && user.type === 'stockmarket') {
         state.user = user;
         state.userValidated = true;
+
+        const { data } = await backend.get('share');
+        if (data) {
+          state.shares = data;
+          (state.shares as IShare[]).forEach(async x => {
+            const { data } = await backend.get('share/prices/' + x.id);
+            x.prices = data;
+          });
+        }
       }
-    },
-    async shares(state: any, shares: IShare[]) {
-      state.shares = shares;
-      (state.shares as IShare[]).forEach(async x => {
-        const { data } = await backend.get('share/prices/' + x.id);
-        x.prices = data;
-      });
     },
     addPrice(state: any, priceShare: IPriceShare) {
       const shares: IShare[] = state.shares;
+      if (!shares) return;
       const { shareId, price, timestamp } = priceShare;
       shares.forEach(x => {
         if (x.id === shareId) {

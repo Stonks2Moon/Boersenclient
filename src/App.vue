@@ -1,5 +1,6 @@
 <template>
   <div class="boersenclient">
+    <BNavbar />
     <BRouter />
   </div>
 </template>
@@ -9,19 +10,15 @@ import { Socket } from 'vue-socket.io-extended';
 import { Vue, Component } from 'vue-property-decorator';
 import BRouter from './components/BRouter.vue';
 import { IPriceShare } from './utils/inerfaces';
-import backend from './utils/backend';
+import BNavbar from './components/BNavbar.vue';
 
 @Component({
   components: {
-    BRouter
+    BRouter,
+    BNavbar
   }
 })
 export default class App extends Vue {
-  async mounted() {
-    const { data } = await backend.get('share');
-    this.$store.commit('shares', data);
-  }
-
   @Socket('price')
   priceChanged(price: IPriceShare): void {
     this.$store.commit('addPrice', price);
@@ -66,12 +63,9 @@ body {
 }
 
 [content] {
-  padding: calc(20px + env(safe-area-inset-top)) 5vw
+  padding: calc(50px + env(safe-area-inset-top)) 5vw
     calc(20px + env(safe-area-inset-bottom));
-}
-
-[max-width] {
-  max-width: 800px;
+  max-width: $max-width;
   margin: 0 auto;
 }
 

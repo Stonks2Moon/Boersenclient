@@ -1,9 +1,9 @@
 <template>
   <div class="view-assets" content>
-    <div max-width>
-      <h1>Assets</h1>
-      <BPriceGraph />
-    </div>
+    <h1>Assets</h1>
+    <BPriceGraph />
+
+    <h2>Manage Assets</h2>
   </div>
 </template>
 

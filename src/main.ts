@@ -21,7 +21,7 @@ for (const component in TCComponents) {
   Vue.component(component, TCComponents[component]);
 }
 
-router.beforeEach(async (to: Route, from: Route, next: Function) => {
+router.beforeEach(async (to: Route, _from: Route, next: Function) => {
   if (!store.getters.valid && (await verfiyUser())) {
     store.commit('signIn', getUserFromJWT());
   }
@@ -35,6 +35,10 @@ router.beforeEach(async (to: Route, from: Route, next: Function) => {
   } else {
     await next();
   }
+});
+
+router.afterEach((to: Route) => {
+  document.getElementsByTagName('title')[0].innerHTML = to.meta.title;
 });
 
 new Vue({

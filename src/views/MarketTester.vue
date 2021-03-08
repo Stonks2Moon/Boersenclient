@@ -1,40 +1,38 @@
 <template>
   <div class="view-market-tester" content>
-    <div max-width>
-      <h1>Market Tester</h1>
-      <br />
-      <tc-input
-        :dark="true"
-        type="number"
-        title="Amount"
-        placeholder="Amount"
-        v-model="amount"
-        :step="10"
+    <h1>Market Tester</h1>
+    <br />
+    <tc-input
+      :dark="true"
+      type="number"
+      title="Amount"
+      placeholder="Amount"
+      v-model="amount"
+      :step="10"
+    />
+    <tc-input
+      :dark="true"
+      type="number"
+      title="Limit"
+      placeholder="Limit"
+      v-model="limit"
+      :step="10"
+    />
+    <br />
+    <tl-grid minWidth="20" gap="10">
+      <tc-button
+        tfbackground="error"
+        variant="filled"
+        name="Sell Order"
+        @click="sell"
       />
-      <tc-input
-        :dark="true"
-        type="number"
-        title="Limit"
-        placeholder="Limit"
-        v-model="limit"
-        :step="10"
+      <tc-button
+        tfbackground="success"
+        variant="filled"
+        name="Buy Order"
+        @click="buy"
       />
-      <br />
-      <tl-grid minWidth="20" gap="10">
-        <tc-button
-          tfbackground="error"
-          variant="filled"
-          name="Sell Order"
-          @click="sell"
-        />
-        <tc-button
-          tfbackground="success"
-          variant="filled"
-          name="Buy Order"
-          @click="buy"
-        />
-      </tl-grid>
-    </div>
+    </tl-grid>
   </div>
 </template>
 

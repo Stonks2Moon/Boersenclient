@@ -1,6 +1,6 @@
 <template>
   <div class="b-router">
-    <transition :name="transitionName" :mode="transitionMode" @>
+    <transition :name="transitionName" :mode="transitionMode">
       <router-view :fullscreen="$route.meta.fullscreen" class="sub-view" />
     </transition>
   </div>
@@ -61,7 +61,8 @@ export default class BRouter extends Vue {
   transform: translate(-60px, 0);
 }
 
-.slide-bottom-enter {
+.slide-bottom-enter,
+.slide-bottom-leave-to {
   opacity: 0;
   transform: translate(0, 100px);
 }
@@ -91,14 +92,11 @@ export default class BRouter extends Vue {
     left: 0;
     z-index: 10;
     min-height: calc(
-      100vh - calc(20px + env(safe-area-inset-top)) -
+      100vh - calc(50px + env(safe-area-inset-top)) -
         calc(20px + env(safe-area-inset-bottom))
     );
 
-    background-color: $background;
-    @media #{$isDark} {
-      background-color: $background_dark;
-    }
+    background: $background_dark;
 
     &[fullscreen] {
       transition: all 0.71s cubic-bezier(0.55, 0, 0.1, 1);
