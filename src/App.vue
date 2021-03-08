@@ -5,15 +5,28 @@
 </template>
 
 <script lang="ts">
+import { Socket } from 'vue-socket.io-extended';
 import { Vue, Component } from 'vue-property-decorator';
 import BRouter from './components/BRouter.vue';
+import { IPriceShare } from './utils/inerfaces';
+import backend from './utils/backend';
 
 @Component({
   components: {
     BRouter
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  async mounted() {
+    const { data } = await backend.get('share');
+    this.$store.commit('shares', data);
+  }
+
+  @Socket('price')
+  priceChanged(price: IPriceShare): void {
+    this.$store.commit('addPrice', price);
+  }
+}
 </script>
 
 <style lang="scss">

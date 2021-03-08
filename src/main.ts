@@ -2,12 +2,18 @@
 import App from '@/App.vue';
 import router from '@/router';
 import store from '@/store';
+import io from 'socket.io-client';
 import * as TCComponents from 'tccomponents_vue';
 import 'tccomponents_vue/lib/tccomponents_vue.css';
 import Vue from 'vue';
 import { Route } from 'vue-router';
+import VueSocketIOExt from 'vue-socket.io-extended';
 import './registerServiceWorker';
 import { getUserFromJWT, verfiyUser } from './utils/auth';
+import { backendUrl } from './utils/constants';
+
+const socket = io(backendUrl);
+Vue.use(VueSocketIOExt, socket);
 
 Vue.config.productionTip = false;
 

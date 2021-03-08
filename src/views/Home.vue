@@ -14,14 +14,14 @@
           icon="shield-star-duo"
           title="assets"
           subtitle="create & delete shares and view their trends"
-          :to="{ name: 'home' }"
+          :to="{ name: 'assets' }"
         />
 
         <BNavigationCard
           icon="book-duo"
           title="orderbook"
           subtitle="view current orderbook"
-          :to="{ name: 'home' }"
+          :to="{ name: 'orderbook' }"
         />
 
         <BNavigationCard

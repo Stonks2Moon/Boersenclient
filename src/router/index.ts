@@ -28,6 +28,22 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/orderbook',
+      name: 'orderbook',
+      component: () => import('@/views/Orderbook.vue'),
+      meta: {
+        title: prefix + 'Orderbook'
+      }
+    },
+    {
+      path: '/assets',
+      name: 'assets',
+      component: () => import('@/views/Assets.vue'),
+      meta: {
+        title: prefix + 'Assets'
+      }
+    },
+    {
       path: '/market-tester',
       name: 'market-tester',
       component: () => import('@/views/MarketTester.vue'),
