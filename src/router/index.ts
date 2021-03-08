@@ -49,15 +49,41 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/assets',
-      name: 'assets',
-      component: () => import('@/views/Assets.vue'),
+      path: '/shares',
+      name: 'shares',
+      component: () => import('@/views/shares/Shares.vue'),
       meta: {
-        title: prefix + 'Assets',
+        title: prefix + 'Shares',
         nav: {
-          title: 'Assets',
+          title: 'Shares',
           prevName: 'home',
           prevTitle: 'Home'
+        }
+      }
+    },
+    {
+      path: '/shares/create',
+      name: 'create-share',
+      component: () => import('@/views/shares/CreateShare.vue'),
+      meta: {
+        title: prefix + 'Create Share',
+        nav: {
+          title: 'Create Share',
+          prevName: 'shares',
+          prevTitle: 'Shares'
+        }
+      }
+    },
+    {
+      path: '/shares/edit/:id',
+      name: 'edit-share',
+      component: () => import('@/views/shares/EditShare.vue'),
+      meta: {
+        title: prefix + 'Edit Share',
+        nav: {
+          title: 'Edit Share',
+          prevName: 'shares',
+          prevTitle: 'Shares'
         }
       }
     },

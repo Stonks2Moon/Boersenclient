@@ -38,15 +38,21 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { BörsenAPI } from 'moonstonks-boersenapi';
 import { getToken } from '@/utils/auth';
-import backend from '@/utils/backend';
+import { BörsenAPI, OrderManager } from 'moonstonks-boersenapi';
 
 @Component
 export default class MarketTester extends Vue {
   public amount = 0;
   public limit = 0;
-  public api = new BörsenAPI(getToken() || '', 'd', 'd', 'd');
+  public api = new BörsenAPI(getToken() || '');
+  public orderManager = new OrderManager(
+    this.api,
+    'onPlace',
+    'onMatch',
+    'onComplete',
+    'onDelete'
+  );
 
   public buy(): void {
     this.submit('buy');
@@ -57,28 +63,12 @@ export default class MarketTester extends Vue {
   }
 
   public submit(type: 'buy' | 'sell'): void {
-    backend
-      .post('order', {
-        shareId: '6037e67c8407c737441517d6',
-        amount: +this.amount,
-        onPlace: 'string',
-        onMatch: 'string',
-        onComplete: 'string',
-        onDelete: 'string',
-        type: type,
-        limit: +this.limit
-      })
-      .then(res => {
-        console.log('Queue', res.data);
+    this.orderManager
+      .placeOrder(type, '6037e67c8407c737441517d6', +this.amount, +this.limit)
+      .then(job => {
+        console.log('Job', job);
       })
       .catch(console.error);
-
-    // this.api
-    //   .placeOrder(type, '6037e67c8407c737441517d6', +this.amount, +this.limit)
-    //   .then(order => {
-    //     console.log('Order', order);
-    //   })
-    //   .catch(error => console.error('Error', error));
   }
 }
 </script>

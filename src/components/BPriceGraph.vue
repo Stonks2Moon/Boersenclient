@@ -1,5 +1,5 @@
 <template>
-  <div class="b-price-graph" v-if="series">
+  <div class="b-price-graph">
     <VueApexCharts
       type="area"
       height="400"
@@ -13,6 +13,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 import VueApexCharts from 'vue-apexcharts';
 import { IShare } from '@/utils/inerfaces';
+import { ShareManager } from '@/utils/ShareManager';
 
 @Component({
   components: {
@@ -39,7 +40,7 @@ export default class BPriceGraph extends Vue {
         forceNiceScale: true,
         labels: { formatter: (value: string) => value + ' €' }
       },
-      colors: ['#25ca49'],
+      colors: (ShareManager.getShares() || []).map(x => x.color),
       stroke: { lineCap: 'round', width: 2, curve: 'straight' },
       tooltip: {
         x: { format: 'dd. MMM yyyy HH:mm:ss' }
@@ -59,8 +60,8 @@ export default class BPriceGraph extends Vue {
   }
 
   get series() {
-    const shares: IShare[] | null = this.$store.getters.shares;
-    if (!shares) return null;
+    const shares: IShare[] | null = ShareManager.getShares();
+    if (!shares) return [];
 
     return shares.map(x => {
       return {

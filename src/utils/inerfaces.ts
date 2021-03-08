@@ -1,3 +1,5 @@
+import { Price } from 'moonstonks-boersenapi/dist/models/Price.model';
+
 export interface IBroker {
   id: string;
   token: string;
@@ -21,14 +23,12 @@ export interface IPriceShare {
   price: number;
   timestamp: number;
 }
-export interface IPrice {
-  price: number;
-  timestamp: number;
-}
 
 export interface IShare {
   id: string;
   name: string;
+  color: string;
+  thumbnail: string;
   price: number;
-  prices: IPrice[];
+  prices: Price[];
 }

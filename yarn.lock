@@ -6179,10 +6179,12 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-moonstonks-boersenapi@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/moonstonks-boersenapi/-/moonstonks-boersenapi-1.0.0.tgz#7683144aeb2411a1b76cfc494e1667665fefc2d1"
-  integrity sha512-5n3lhFCt2367Cs/rK/Ncie999kSNT5D3j8mG4lyOUaLcFyd+WdNofPaO9gWxKXxq4skkyDwnWuUHcQcDl1RbaQ==
+moonstonks-boersenapi@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/moonstonks-boersenapi/-/moonstonks-boersenapi-1.0.3.tgz#ddfb704b0f18905b5f7811a7b62f52d9df622d34"
+  integrity sha512-JMYfHNypnJL2ht/qlQpzhbQ++t33tCeVYNNPgUF0a+/qxDkjSb8wTYphtu3Mz+MbQMq7XhhGjZ0FjbGVzqObQw==
+  dependencies:
+    node-fetch "^2.6.1"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -6291,6 +6293,11 @@ no-case@^2.2.0:
   integrity sha512-rmTZ9kz+f3rCvK2TD1Ue/oZlns7OGoIWP4fc3llxxRXlOkHKoWPPWJOfFYpITabSow43QJbRIoHQXtt10VldyQ==
   dependencies:
     lower-case "^1.1.1"
+
+node-fetch@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-forge@^0.10.0:
   version "0.10.0"

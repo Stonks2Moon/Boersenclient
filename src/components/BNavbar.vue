@@ -1,5 +1,5 @@
 <template>
-  <div class="b-navbar" v-if="$store.getters.valid && $route.name !== 'login'">
+  <div class="b-navbar" v-if="$route.name !== 'login'">
     <div class="navbar-wrapper">
       <tl-flow class="prev">
         <router-link

@@ -11,9 +11,9 @@
 
       <BNavigationCard
         icon="shield-star-duo"
-        title="assets"
+        title="shares"
         subtitle="create & delete shares and view their trends"
-        :to="{ name: 'assets' }"
+        :to="{ name: 'shares' }"
       />
 
       <BNavigationCard
