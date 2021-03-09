@@ -27,13 +27,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { IShare } from '@/utils/inerfaces';
 import backend from '@/utils/backend';
-import { ShareManager } from '@/utils/ShareManager';
+import { Share, ShareManager } from '@/utils/ShareManager';
 
 @Component
 export default class EditShare extends Vue {
-  public share: IShare | null = null;
+  public share: Share | null = null;
   public submitting = false;
   public error = '';
 

@@ -9,8 +9,9 @@
 import { Socket } from 'vue-socket.io-extended';
 import { Vue, Component } from 'vue-property-decorator';
 import BRouter from './components/BRouter.vue';
-import { IPriceShare } from './utils/inerfaces';
 import BNavbar from './components/BNavbar.vue';
+import { Price } from 'node_modules/moonstonks-boersenapi/dist/models/Price.model';
+import { ShareManager } from '@/utils/ShareManager';
 
 @Component({
   components: {
@@ -20,8 +21,8 @@ import BNavbar from './components/BNavbar.vue';
 })
 export default class App extends Vue {
   @Socket('price')
-  priceChanged(price: IPriceShare): void {
-    this.$store.commit('addPrice', price);
+  priceChanged(price: Price & { shareId: string }): void {
+    ShareManager.addPrice(price);
   }
 }
 </script>

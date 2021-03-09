@@ -1,7 +1,7 @@
 import router from '@/router';
 import store from '@/store';
+import { Broker } from '@/utils/BrokerManager';
 import { backendUrl } from './constants';
-import { IBroker } from './inerfaces';
 
 const lsKey = 'moonstonks-boersenclient-auth';
 
@@ -9,7 +9,7 @@ export function getToken(): string | null {
   return localStorage.getItem(lsKey);
 }
 
-export function getUserFromJWT(): IBroker {
+export function getUserFromJWT(): Broker {
   const base64Url = (getToken() || 'A.B.C').split('.')[1];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
   return JSON.parse(window.atob(base64));
@@ -41,7 +41,7 @@ export async function verfiyUser(): Promise<boolean> {
       return false;
     });
 
-  if (res.statusCode && res.statusCode === 401) {
+  if (res.statusCode && (res.statusCode === 403 || res.statusCode === 401)) {
     signOut();
     return false;
   }

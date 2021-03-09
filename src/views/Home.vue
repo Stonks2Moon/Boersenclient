@@ -4,9 +4,9 @@
     <tl-grid minWidth="150" gap="20" arrangement="auto-fill">
       <BNavigationCard
         icon="user-shield-duo"
-        title="tokens"
-        subtitle="create, delete and manage access tokens"
-        :to="{ name: 'tokens' }"
+        title="Brokers"
+        subtitle="create, delete and manage brokers"
+        :to="{ name: 'brokers' }"
       />
 
       <BNavigationCard

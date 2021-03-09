@@ -45,11 +45,22 @@
 import backend from '@/utils/backend';
 import { Socket } from 'vue-socket.io-extended';
 import { Vue, Component } from 'vue-property-decorator';
-import { IOrder, IShare } from '@/utils/inerfaces';
+import { Share } from '@/utils/ShareManager';
+
+interface Order {
+  id: string;
+  shareId: string;
+  timestamp: number;
+  amount: number;
+  type: 'buy' | 'sell';
+  limit?: number;
+  stop?: number;
+  stopLimit?: number;
+}
 
 @Component
 export default class Orderbook extends Vue {
-  public orders: IOrder[] | null = null;
+  public orders: Order[] | null = null;
 
   mounted() {
     this.loadOrderbook();
@@ -61,11 +72,11 @@ export default class Orderbook extends Vue {
     this.orders = data;
   }
 
-  get shares(): IShare[] | null {
+  get shares(): Share[] | null {
     return this.$store.getters.shares;
   }
 
-  getSellOrders(shareId: string): IOrder[] {
+  getSellOrders(shareId: string): Order[] {
     if (!this.orders) return [];
     return this.orders
       .filter(x => x.shareId === shareId && x.type === 'sell')
@@ -76,7 +87,7 @@ export default class Orderbook extends Vue {
       });
   }
 
-  getBuyOrders(shareId: string): IOrder[] {
+  getBuyOrders(shareId: string): Order[] {
     if (!this.orders) return [];
     return this.orders
       .filter(x => x.shareId === shareId && x.type === 'buy')

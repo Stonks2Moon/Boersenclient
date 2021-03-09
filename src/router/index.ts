@@ -23,15 +23,41 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/tokens',
-      name: 'tokens',
-      component: () => import('@/views/Tokens.vue'),
+      path: '/brokers',
+      name: 'brokers',
+      component: () => import('@/views/brokers/Brokers.vue'),
       meta: {
-        title: prefix + 'Tokens',
+        title: prefix + 'Brokers',
         nav: {
-          title: 'Tokens',
+          title: 'Brokers',
           prevName: 'home',
           prevTitle: 'Home'
+        }
+      }
+    },
+    {
+      path: '/brokers/create',
+      name: 'create-broker',
+      component: () => import('@/views/brokers/CreateBroker.vue'),
+      meta: {
+        title: prefix + 'Create Broker',
+        nav: {
+          title: 'Create Broker',
+          prevName: 'brokers',
+          prevTitle: 'Brokers'
+        }
+      }
+    },
+    {
+      path: '/brokers/edit/:id',
+      name: 'edit-broker',
+      component: () => import('@/views/brokers/EditBroker.vue'),
+      meta: {
+        title: prefix + 'Edit Broker',
+        nav: {
+          title: 'Edit Broker',
+          prevName: 'brokers',
+          prevTitle: 'Brokers'
         }
       }
     },

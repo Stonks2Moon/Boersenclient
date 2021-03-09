@@ -12,7 +12,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import VueApexCharts from 'vue-apexcharts';
-import { IShare } from '@/utils/inerfaces';
 import { ShareManager } from '@/utils/ShareManager';
 
 @Component({
@@ -60,7 +59,7 @@ export default class BPriceGraph extends Vue {
   }
 
   get series() {
-    const shares: IShare[] | null = ShareManager.getShares();
+    const shares = ShareManager.getShares();
     if (!shares) return [];
 
     return shares.map(x => {

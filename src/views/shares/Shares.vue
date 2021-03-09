@@ -41,8 +41,7 @@
 
 <script lang="ts">
 import BPriceGraph from '@/components/BPriceGraph.vue';
-import { IShare } from '@/utils/inerfaces';
-import { ShareManager } from '@/utils/ShareManager';
+import { Share, ShareManager } from '@/utils/ShareManager';
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
@@ -51,7 +50,11 @@ import { Vue, Component } from 'vue-property-decorator';
   }
 })
 export default class Shares extends Vue {
-  get shares(): IShare[] | null {
+  mounted() {
+    ShareManager.loadShares();
+  }
+
+  get shares(): Share[] | null {
     return ShareManager.getShares();
   }
 }
