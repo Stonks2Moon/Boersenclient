@@ -40,7 +40,7 @@ export default class BPriceGraph extends Vue {
         labels: { formatter: (value: string) => value + ' €' }
       },
       colors: (ShareManager.getShares() || []).map(x => x.color),
-      stroke: { lineCap: 'round', width: 2, curve: 'straight' },
+      stroke: { lineCap: 'round', width: 2, curve: 'stepline' },
       tooltip: {
         x: { format: 'dd. MMM yyyy HH:mm:ss' }
       },

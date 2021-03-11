@@ -56,6 +56,7 @@ export class ShareManager {
     shares = shares.map(x => {
       if (x.id === price.shareId) {
         x.prices.push({ price: price.price, timestamp: price.timestamp });
+        x.price = x.prices.sort((a, b) => b.timestamp - a.timestamp)[0].price;
       }
       return x;
     });

@@ -10,26 +10,32 @@
         <tc-table :dark="true">
           <tc-tr key="a">
             <tc-th>Datum</tc-th>
+            <tc-th>Stop</tc-th>
             <tc-th>Anzahl</tc-th>
             <tc-th>Preis</tc-th>
             <tc-th>Anzahl</tc-th>
+            <tc-th>Stop</tc-th>
             <tc-th>Datum</tc-th>
           </tc-tr>
           <tc-tr v-for="so in getSellOrders(s.id)" :key="so.id">
+            <tc-td></tc-td>
             <tc-td></tc-td>
             <tc-td></tc-td>
             <tc-td :tfcolor="so.limit ? 'error' : 'alarm'">
               {{ so.limit || 'Market' }}
             </tc-td>
             <tc-td tfcolor="error">{{ so.amount }}</tc-td>
+            <tc-td>{{ so.stop }}</tc-td>
             <tc-td>{{ formatTime(so.timestamp) }}</tc-td>
           </tc-tr>
           <tc-tr v-for="bo in getBuyOrders(s.id)" :key="bo.id">
             <tc-td>{{ formatTime(bo.timestamp) }}</tc-td>
+            <tc-td>{{ bo.stop }}</tc-td>
             <tc-td tfcolor="success">{{ bo.amount }}</tc-td>
             <tc-td :tfcolor="bo.limit ? 'success' : 'alarm'">
               {{ bo.limit || 'Market' }}
             </tc-td>
+            <tc-td></tc-td>
             <tc-td></tc-td>
             <tc-td></tc-td>
           </tc-tr>
@@ -82,7 +88,8 @@ export default class Orderbook extends Vue {
       .filter(x => x.shareId === shareId && x.type === 'sell')
       .sort((a, b) => {
         if (!a.limit && b.limit) return 1;
-        if (a.limit === b.limit) return b.timestamp - a.timestamp;
+        if (a.limit === b.limit || !(a.limit && b.limit))
+          return b.timestamp - a.timestamp;
         return (b.limit || 0) - (a.limit || 0);
       });
   }
@@ -93,7 +100,8 @@ export default class Orderbook extends Vue {
       .filter(x => x.shareId === shareId && x.type === 'buy')
       .sort((a, b) => {
         if (!a.limit && b.limit) return -1;
-        if (a.limit === b.limit) return a.timestamp - b.timestamp;
+        if (a.limit === b.limit || !(a.limit && b.limit))
+          return a.timestamp - b.timestamp;
         return (b.limit || 0) - (a.limit || 0);
       });
   }

@@ -2,22 +2,41 @@
   <div class="view-market-tester" content>
     <h1>Market Tester</h1>
     <br />
-    <tc-input
-      :dark="true"
-      type="number"
-      title="Amount"
-      placeholder="Amount"
-      v-model="amount"
-      :step="10"
-    />
-    <tc-input
-      :dark="true"
-      type="number"
-      title="Limit"
-      placeholder="Limit"
-      v-model="limit"
-      :step="10"
-    />
+    <tl-grid minWidth="230" gap="0 10">
+      <tc-input
+        :dark="true"
+        type="number"
+        title="Amount"
+        placeholder="Amount"
+        v-model="amount"
+        :step="10"
+      />
+      <tc-input
+        :dark="true"
+        type="number"
+        title="Limit"
+        placeholder="Limit"
+        v-model="limit"
+        :step="10"
+      />
+
+      <tc-input
+        :dark="true"
+        type="number"
+        title="Stop"
+        placeholder="Stop"
+        v-model="stop"
+        :step="10"
+      />
+      <tc-input
+        :dark="true"
+        type="number"
+        title="Stop Limit"
+        placeholder="Stop Limit"
+        v-model="stopLimit"
+        :step="10"
+      />
+    </tl-grid>
     <br />
     <tl-grid minWidth="20" gap="10">
       <tc-button
@@ -45,6 +64,8 @@ import { BörsenAPI, OrderManager } from 'moonstonks-boersenapi';
 export default class MarketTester extends Vue {
   public amount = 0;
   public limit = 0;
+  public stop = 0;
+  public stopLimit = 0;
   public api = new BörsenAPI(getToken() || '');
   public orderManager = new OrderManager(
     this.api,
@@ -64,7 +85,14 @@ export default class MarketTester extends Vue {
 
   public submit(type: 'buy' | 'sell'): void {
     this.orderManager
-      .placeOrder(type, '6037e67c8407c737441517d6', +this.amount, +this.limit)
+      .placeOrder(
+        type,
+        '6037e67c8407c737441517d6',
+        +this.amount,
+        +this.limit,
+        +this.stop,
+        +this.stopLimit
+      )
       .then(job => {
         console.log('Job', job);
       })

@@ -6179,10 +6179,10 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-moonstonks-boersenapi@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/moonstonks-boersenapi/-/moonstonks-boersenapi-1.0.3.tgz#ddfb704b0f18905b5f7811a7b62f52d9df622d34"
-  integrity sha512-JMYfHNypnJL2ht/qlQpzhbQ++t33tCeVYNNPgUF0a+/qxDkjSb8wTYphtu3Mz+MbQMq7XhhGjZ0FjbGVzqObQw==
+moonstonks-boersenapi@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/moonstonks-boersenapi/-/moonstonks-boersenapi-1.2.0.tgz#828847353e27c4280338c7c6f06e4cc6f81c1477"
+  integrity sha512-gfj20ze3wCys8nmbooorPIGajXa2iBRnipTlazXbRjBzY6pjadtP5qGzFQIfM7eRfrXIqdawJarOxz/VKVF21g==
   dependencies:
     node-fetch "^2.6.1"
 
