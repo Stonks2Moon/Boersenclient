@@ -28,14 +28,6 @@
         v-model="stop"
         :step="10"
       />
-      <tc-input
-        :dark="true"
-        type="number"
-        title="Stop Limit"
-        placeholder="Stop Limit"
-        v-model="stopLimit"
-        :step="10"
-      />
     </tl-grid>
     <br />
     <tl-grid minWidth="20" gap="10">
@@ -90,8 +82,7 @@ export default class MarketTester extends Vue {
         '6037e67c8407c737441517d6',
         +this.amount,
         +this.limit,
-        +this.stop,
-        +this.stopLimit
+        +this.stop
       )
       .then(job => {
         console.log('Job', job);
