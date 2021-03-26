@@ -10,9 +10,9 @@ import { Route } from 'vue-router';
 import VueSocketIOExt from 'vue-socket.io-extended';
 import './registerServiceWorker';
 import { getUserFromJWT, verfiyUser } from './utils/auth';
-import { backendUrl } from './utils/constants';
+import { socketUrl } from './utils/constants';
 
-const socket = io(backendUrl);
+const socket = io(socketUrl);
 Vue.use(VueSocketIOExt, socket);
 
 Vue.config.productionTip = false;

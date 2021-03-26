@@ -10,7 +10,7 @@ import { Socket } from 'vue-socket.io-extended';
 import { Vue, Component } from 'vue-property-decorator';
 import BRouter from './components/BRouter.vue';
 import BNavbar from './components/BNavbar.vue';
-import { Price } from 'node_modules/moonstonks-boersenapi/dist/models/Price.model';
+import { Price } from 'moonstonks-boersenapi';
 import { ShareManager } from '@/utils/ShareManager';
 
 @Component({
