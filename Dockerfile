@@ -1,26 +1,12 @@
-FROM node:latest as build
-
+FROM node:latest as build-stage
 WORKDIR /app
-
-COPY *.json ./
-COPY yarn.lock .
-RUN yarn install --link-duplicates --ignore-optional
-
-
-COPY ./ ./
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install
+COPY ./ .
 RUN yarn build
-RUN yarn install --production --link-duplicates --ignore-optional
 
-
-FROM node:alpine as prod
-EXPOSE 8080
-
-WORKDIR /app
-USER node
-ENV NODE_ENV production
-
-COPY --from=build /app/node_modules /app/node_modules
-COPY --from=build /app/dist /app/dist
-COPY ./*.json /app/
-
-CMD ["node", "--expose-gc", "dist/main.js" ]
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
