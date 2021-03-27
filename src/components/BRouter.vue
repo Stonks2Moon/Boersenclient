@@ -96,6 +96,13 @@ export default class BRouter extends Vue {
       100vh - calc(50px + env(safe-area-inset-top)) -
         calc(20px + env(safe-area-inset-bottom))
     );
+    @media #{$isMobile} {
+      min-height: calc(
+        100vh - calc(50px + env(safe-area-inset-top)) -
+          calc(70px + env(safe-area-inset-bottom))
+      );
+    }
+
     overflow-x: hidden;
 
     background: $background_dark;

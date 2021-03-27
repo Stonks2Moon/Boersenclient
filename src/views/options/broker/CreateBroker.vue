@@ -3,8 +3,11 @@
     <h1>Create Broker</h1>
 
     <br />
-    <tc-input title="Displayname" :dark="true" v-model="dto.displayName" />
+    <b>Displayname</b>
+    <tc-input :dark="true" v-model="dto.displayName" />
+
     <br />
+    <b>Type</b>
     <tc-select
       tfbackground="error"
       :dark="true"
@@ -30,7 +33,7 @@
       :disabled="submitting"
       tfbackground="success"
       variant="filled"
-      name="Speichern"
+      name="Create"
       @click="create"
     />
     <p error>{{ error }}</p>
@@ -56,7 +59,7 @@ export default class CreateBroker extends Vue {
       .post('broker', this.dto)
       .then(res => {
         BrokerManager.addBroker(res.data);
-        this.$router.push({ name: 'brokers' });
+        this.$router.push({ name: 'mgmt-brokers' });
       })
       .catch(error => {
         this.error = error.message;
@@ -68,6 +71,9 @@ export default class CreateBroker extends Vue {
 
 <style lang="scss" scoped>
 .view-create-broker {
-  //
+  b {
+    display: block;
+    margin: 5px;
+  }
 }
 </style>

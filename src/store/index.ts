@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Broker, BrokerManager } from '@/utils/BrokerManager';
 import { Share, ShareManager } from '@/utils/ShareManager';
+import { Order } from 'moonstonks-boersenapi';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -8,12 +9,17 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    isDesktop: false,
     user: {} as Broker,
     userValidated: false,
     shares: null,
-    brokers: null
+    brokers: null,
+    orderbook: null
   },
   getters: {
+    isDesktop: (state: any): boolean => {
+      return state.isDesktop;
+    },
     valid: (state: any): boolean => {
       return state.userValidated;
     },
@@ -25,9 +31,15 @@ const store = new Vuex.Store({
     },
     brokers: (state: any): Broker[] | null => {
       return state.brokers;
+    },
+    orderbook: (state: any): Order[] | null => {
+      return state.orderbook;
     }
   },
   mutations: {
+    isDesktop(state: any, isDesktop: boolean) {
+      state.isDesktop = isDesktop;
+    },
     signOut(state: any) {
       state.userValidated = false;
       state.user = undefined;
@@ -45,6 +57,9 @@ const store = new Vuex.Store({
     },
     brokers(state: any, brokers: Broker[]) {
       state.brokers = brokers;
+    },
+    orderbook(state: any, orderbook: Order[]) {
+      state.orderbook = orderbook;
     }
   }
 });

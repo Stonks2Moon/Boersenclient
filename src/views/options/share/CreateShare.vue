@@ -56,7 +56,7 @@ export default class CreateShare extends Vue {
       .post('share', { ...this.share, price: +this.share.price })
       .then(res => {
         ShareManager.createShare(res.data);
-        this.$router.push({ name: 'shares' });
+        this.$router.push({ name: 'mgmt-shares' });
       })
       .catch(error => {
         this.error = error.message;

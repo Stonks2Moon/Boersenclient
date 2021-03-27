@@ -1,29 +1,55 @@
 <template>
-  <div class="b-navbar" v-if="$route.name !== 'login'">
-    <div class="navbar-wrapper">
-      <tl-flow class="prev">
-        <router-link
-          v-if="$route && $route.meta.nav && $route.meta.nav.prevName"
-          :to="{ name: $route.meta.nav.prevName }"
-        >
-          <i class="ti-chevron-left" />
-          <span>{{ $route.meta.nav.prevTitle }}</span>
-        </router-link>
-      </tl-flow>
-
-      <div class="title">
+  <tc-navbar class="b-navbar" :dark="true" v-if="$store.getters.valid">
+    <tl-flow v-if="$store.getters.isDesktop" slot="logo">
+      <img src="pwa/moonstonks.svg" alt="" />
+      <b>Börsenclient</b>
+    </tl-flow>
+    <div slot="logo" v-else class="mobile-header">
+      <transition name="slide-left" mode="out-in">
+        <tc-header-button
+          v-if="$route.meta.prevName"
+          :name="$route.meta.prevTitle || 'back'"
+          :routeName="$route.meta.prevName"
+          tfcolor="error"
+        />
+        <b v-else>Börsenclient</b>
+      </transition>
+      <div class="title" v-if="$route.meta.title">
         <transition name="appear">
           <span v-if="showTitle">
-            {{ $route.meta.nav.title }}
+            {{ $route.meta.title }}
           </span>
         </transition>
       </div>
-
-      <tl-flow class="logo">
-        <img src="pwa/moonstonks.svg" alt="" />
-      </tl-flow>
+      <img src="pwa/moonstonks.svg" alt="" />
     </div>
-  </div>
+    <template v-if="$store.getters.isDesktop">
+      <tc-navbar-item
+        icon="house-duo"
+        name="Home"
+        routeName="home"
+        tfcolor="error"
+      />
+      <tc-navbar-item
+        icon="book-filled"
+        name="Orderbook"
+        routeName="orderbook"
+        tfcolor="error"
+      />
+      <tc-navbar-item
+        icon="file-text"
+        name="Clearing"
+        routeName="clearing"
+        tfcolor="error"
+      />
+      <tc-navbar-item
+        icon="gears"
+        name="Options"
+        routeName="options"
+        tfcolor="error"
+      />
+    </template>
+  </tc-navbar>
 </template>
 
 <script lang="ts">
@@ -50,54 +76,27 @@ export default class BNavbar extends Vue {
 
 <style lang="scss" scoped>
 .b-navbar {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  right: 0;
-  @include backdrop-blur($color);
-  padding: 0 5vw;
-  padding-top: env(safe-area-inset-top);
-
-  .navbar-wrapper {
-    max-width: $max-width;
+  .mobile-header {
+    width: 90vw;
+    display: flex;
+    align-items: center;
     position: relative;
-    height: 50px;
-    margin: 0 auto;
-  }
 
-  .prev {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
-    a {
-      text-decoration: none;
-      color: $error;
-      i {
-        font-size: 14px;
-        margin-right: 5px;
-      }
+    .title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 600;
+      opacity: 0.75;
     }
-  }
-
-  .title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: 600;
-  }
-
-  .logo {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
     img {
-      height: 30px;
+      position: absolute;
+      right: 0;
     }
+  }
+  img {
+    height: 30px;
+    margin-right: 10px;
   }
 }
 
@@ -108,5 +107,18 @@ export default class BNavbar extends Vue {
 .appear-leave-to,
 .appear-enter {
   opacity: 0;
+}
+
+.slide-left-leave-active,
+.slide-left-enter-active {
+  transition: 0.2s ease-in-out;
+}
+.slide-left-leave-to {
+  opacity: 0;
+  margin-left: 10px;
+}
+.slide-left-enter {
+  opacity: 0;
+  margin-left: -10px;
 }
 </style>

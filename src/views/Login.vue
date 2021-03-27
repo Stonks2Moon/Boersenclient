@@ -7,6 +7,7 @@
 
         <tc-input placeholder="Enter Token" v-model="token" :dark="true" />
         <tc-button
+          :disabled="submitting"
           variant="filled"
           tfbackground="error"
           name="Anmelden"
@@ -32,11 +33,17 @@ import { Vue, Component } from 'vue-property-decorator';
 @Component
 export default class Login extends Vue {
   public token = '';
+  public submitting = false;
 
   public async login(): Promise<void> {
+    if (this.submitting) return;
+    this.submitting = true;
     if (await signIn(this.token)) {
       this.$router.push({ name: 'home' });
+    } else {
+      alert('Invalid token');
     }
+    this.submitting = false;
   }
 }
 </script>
@@ -50,6 +57,7 @@ export default class Login extends Vue {
 
   [content] {
     padding-top: calc(20px + env(safe-area-inset-top));
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
   }
 
   .login-container {

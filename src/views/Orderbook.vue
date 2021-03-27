@@ -48,34 +48,14 @@
 </template>
 
 <script lang="ts">
-import backend from '@/utils/backend';
-import { Socket } from 'vue-socket.io-extended';
 import { Vue, Component } from 'vue-property-decorator';
 import { Share } from '@/utils/ShareManager';
-
-interface Order {
-  id: string;
-  shareId: string;
-  timestamp: number;
-  amount: number;
-  type: 'buy' | 'sell';
-  limit?: number;
-  stop?: number;
-  stopLimit?: number;
-}
+import { Order } from 'moonstonks-boersenapi';
 
 @Component
 export default class Orderbook extends Vue {
-  public orders: Order[] | null = null;
-
-  mounted() {
-    this.loadOrderbook();
-  }
-
-  @Socket('update-orderbook')
-  public async loadOrderbook(): Promise<void> {
-    const { data } = await backend.get('order/orders');
-    this.orders = data;
+  get orders(): Order[] | null {
+    return this.$store.getters.orderbook;
   }
 
   get shares(): Share[] | null {

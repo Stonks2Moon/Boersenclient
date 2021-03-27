@@ -1,8 +1,9 @@
+import EmptyRouter from '@/views-interim/EmptyRouter.vue';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
-const prefix = 'Börsenclient | ';
+export const prefix = 'Börsenclient | ';
 
 const router = new VueRouter({
   scrollBehavior() {
@@ -16,101 +17,27 @@ const router = new VueRouter({
       name: 'home',
       component: () => import('@/views/Home.vue'),
       meta: {
-        title: prefix + 'Home',
-        nav: {
-          title: 'Home'
-        }
+        title: 'Home'
       }
     },
+
     {
-      path: '/brokers',
-      name: 'brokers',
-      component: () => import('@/views/brokers/Brokers.vue'),
+      path: '/share/:id',
+      name: 'share-details',
+      component: () => import('@/views/ShareDetails.vue'),
       meta: {
-        title: prefix + 'Brokers',
-        nav: {
-          title: 'Brokers',
-          prevName: 'home',
-          prevTitle: 'Home'
-        }
+        title: 'Share Details',
+        prevName: 'home',
+        prevTitle: 'Home'
       }
     },
-    {
-      path: '/brokers/create',
-      name: 'create-broker',
-      component: () => import('@/views/brokers/CreateBroker.vue'),
-      meta: {
-        title: prefix + 'Create Broker',
-        nav: {
-          title: 'Create Broker',
-          prevName: 'brokers',
-          prevTitle: 'Brokers'
-        }
-      }
-    },
-    {
-      path: '/brokers/edit/:id',
-      name: 'edit-broker',
-      component: () => import('@/views/brokers/EditBroker.vue'),
-      meta: {
-        title: prefix + 'Edit Broker',
-        nav: {
-          title: 'Edit Broker',
-          prevName: 'brokers',
-          prevTitle: 'Brokers'
-        }
-      }
-    },
+
     {
       path: '/orderbook',
       name: 'orderbook',
       component: () => import('@/views/Orderbook.vue'),
       meta: {
-        title: prefix + 'Orderbook',
-        nav: {
-          title: 'Orderbook',
-          prevName: 'home',
-          prevTitle: 'Home'
-        }
-      }
-    },
-    {
-      path: '/shares',
-      name: 'shares',
-      component: () => import('@/views/shares/Shares.vue'),
-      meta: {
-        title: prefix + 'Shares',
-        nav: {
-          title: 'Shares',
-          prevName: 'home',
-          prevTitle: 'Home'
-        }
-      }
-    },
-    {
-      path: '/shares/create',
-      name: 'create-share',
-      component: () => import('@/views/shares/CreateShare.vue'),
-      meta: {
-        title: prefix + 'Create Share',
-        nav: {
-          title: 'Create Share',
-          prevName: 'shares',
-          prevTitle: 'Shares'
-        }
-      }
-    },
-    {
-      path: '/shares/edit/:id',
-      name: 'edit-share',
-      component: () => import('@/views/shares/EditShare.vue'),
-      meta: {
-        title: prefix + 'Edit Share',
-        nav: {
-          title: 'Edit Share',
-          prevName: 'shares',
-          prevTitle: 'Shares'
-        }
+        title: 'Orderbook'
       }
     },
     {
@@ -118,14 +45,107 @@ const router = new VueRouter({
       name: 'market-tester',
       component: () => import('@/views/MarketTester.vue'),
       meta: {
-        title: prefix + 'Market Tester',
-        nav: {
-          title: 'Market Tester',
-          prevName: 'home',
-          prevTitle: 'Home'
-        }
+        title: 'Market Tester'
       }
     },
+
+    {
+      path: '/options',
+      component: EmptyRouter,
+      children: [
+        {
+          path: '',
+          name: 'options',
+          component: () => import('@/views/options/Options.vue'),
+          meta: {
+            title: 'Options'
+          }
+        },
+        {
+          path: 'shares',
+          component: EmptyRouter,
+          children: [
+            {
+              path: '',
+              name: 'mgmt-shares',
+              component: () => import('@/views/options/share/Shares.vue'),
+              meta: {
+                title: 'Shares',
+                prevName: 'options',
+                prevTitle: 'Options'
+              }
+            },
+            {
+              path: 'edit/:id',
+              name: 'mgmt-edit-share',
+              component: () => import('@/views/options/share/EditShare.vue'),
+              meta: {
+                title: 'Edit Share',
+                prevName: 'mgmt-shares',
+                prevTitle: 'Shares'
+              }
+            },
+            {
+              path: 'create',
+              name: 'mgmt-create-share',
+              component: () => import('@/views/options/share/CreateShare.vue'),
+              meta: {
+                title: 'Create Share',
+                prevName: 'mgmt-shares',
+                prevTitle: 'Shares'
+              }
+            }
+          ]
+        },
+        {
+          path: 'brokers',
+          component: EmptyRouter,
+          children: [
+            {
+              path: '',
+              name: 'mgmt-brokers',
+              component: () => import('@/views/options/broker/Brokers.vue'),
+              meta: {
+                title: 'brokers',
+                prevName: 'options',
+                prevTitle: 'Options'
+              }
+            },
+            {
+              path: 'edit/:id',
+              name: 'mgmt-edit-broker',
+              component: () => import('@/views/options/broker/EditBroker.vue'),
+              meta: {
+                title: 'Edit Broker',
+                prevName: 'mgmt-brokers',
+                prevTitle: 'Brokers'
+              }
+            },
+            {
+              path: 'create',
+              name: 'mgmt-create-broker',
+              component: () =>
+                import('@/views/options/broker/CreateBroker.vue'),
+              meta: {
+                title: 'Create Broker',
+                prevName: 'mgmt-brokers',
+                prevTitle: 'Brokers'
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      path: '/clearing',
+      name: 'clearing',
+      component: () => import('@/views/clearing/Clearing.vue'),
+      meta: {
+        title: 'Clearing'
+      }
+    },
+
     {
       path: '/login',
       name: 'login',

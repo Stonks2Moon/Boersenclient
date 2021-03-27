@@ -8,7 +8,7 @@ export class ShareManager {
   }
 
   public static async loadShares(): Promise<void> {
-    let shares = this.getShares();
+    let shares = this.shares;
     if (shares) return;
     const { data } = await backend.get('share');
     shares = data;
@@ -28,18 +28,18 @@ export class ShareManager {
     }
   }
 
-  public static getShares(): Share[] | null {
+  public static get shares(): Share[] | null {
     return store.getters.shares;
   }
 
   public static getShare(shareId: string): Share | null {
-    const shares = this.getShares();
+    const shares = this.shares;
     if (!shares) return null;
     return shares.filter(x => x.id === shareId)[0] || null;
   }
 
   public static updateShare(share: Share): void {
-    let shares = this.getShares();
+    let shares = this.shares;
     if (!shares) return;
     shares = shares.map(x => {
       if (x.id === share.id) {
@@ -51,7 +51,7 @@ export class ShareManager {
   }
 
   public static addPrice(price: Price & { shareId: string }) {
-    let shares = this.getShares();
+    let shares = this.shares;
     if (!shares) return;
     shares = shares.map(x => {
       if (x.id === price.shareId) {
@@ -64,7 +64,7 @@ export class ShareManager {
   }
 
   public static createShare(share: Share): void {
-    let shares = this.getShares();
+    let shares = this.shares;
     const createShare: Share = { ...share, prices: [] };
     if (!shares) shares = [createShare];
     else shares.push(createShare);

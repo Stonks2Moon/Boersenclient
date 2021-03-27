@@ -84,9 +84,6 @@ export default class MarketTester extends Vue {
         +this.limit,
         +this.stop
       )
-      .then(job => {
-        console.log('Job', job);
-      })
       .catch(console.error);
   }
 }

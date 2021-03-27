@@ -1,6 +1,6 @@
 /* eslint-disable */
 import App from '@/App.vue';
-import router from '@/router';
+import router, { prefix } from '@/router';
 import store from '@/store';
 import io from 'socket.io-client';
 import * as TCComponents from 'tccomponents_vue';
@@ -36,7 +36,7 @@ router.beforeEach(async (to: Route, _from: Route, next: Function) => {
 });
 
 router.afterEach((to: Route) => {
-  document.getElementsByTagName('title')[0].innerHTML = to.meta.title;
+  document.getElementsByTagName('title')[0].innerHTML = prefix + to.meta.title;
 });
 
 new Vue({

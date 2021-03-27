@@ -1,7 +1,6 @@
 <template>
-  <div class="view-tokens" content>
-    <h1>Tokens</h1>
-    Hello There
+  <div class="view-clearing" content>
+    <h1>Clearing</h1>
   </div>
 </template>
 
@@ -9,11 +8,11 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component
-export default class Tokens extends Vue {}
+export default class Clearing extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.view-tokens {
+.view-clearing {
   //
 }
 </style>

@@ -8,27 +8,25 @@ export class BrokerManager {
   }
 
   public static async loadBrokers(): Promise<void> {
-    if (!this.getBrokers()) {
+    if (!this.brokers) {
       const { data } = await backend.get('broker');
-      console.log('Broker', data);
-
       if (data) this.commit(data);
     }
   }
 
-  public static getBrokers(): Broker[] | null {
+  public static get brokers(): Broker[] | null {
     return store.getters.brokers;
   }
 
   public static getBroker(id: string): Broker | null {
-    const brokers = this.getBrokers();
+    const brokers = this.brokers;
     if (!brokers) return null;
     return brokers.filter(x => x.id === id)[0] || null;
   }
 
   public static addBroker(broker: Broker): void {
     if (!broker) return;
-    let brokers = this.getBrokers();
+    let brokers = this.brokers;
     if (!brokers) {
       this.commit([broker]);
     } else {
@@ -46,7 +44,7 @@ export class BrokerManager {
   }
 
   public static removeBroker(id: string): void {
-    const brokers = this.getBrokers();
+    const brokers = this.brokers;
     if (!brokers || !id) return;
     this.commit(brokers.filter(x => x.id !== id));
   }

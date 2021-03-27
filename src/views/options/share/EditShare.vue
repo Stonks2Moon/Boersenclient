@@ -40,7 +40,7 @@ export default class EditShare extends Vue {
     await ShareManager.loadShares();
     const share = ShareManager.getShare(this.$route.params.id);
     if (!share) {
-      this.$router.push({ name: 'shares' });
+      this.$router.push({ name: 'mgmt-shares' });
     } else {
       this.share = { ...share };
     }
@@ -53,7 +53,7 @@ export default class EditShare extends Vue {
       .patch('share/' + this.share.id, this.share)
       .then(res => {
         ShareManager.updateShare(res.data);
-        this.$router.push({ name: 'shares' });
+        this.$router.push({ name: 'mgmt-shares' });
       })
       .catch(error => {
         this.error = error.message;
