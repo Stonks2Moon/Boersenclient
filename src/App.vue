@@ -60,15 +60,11 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 html {
-  @include custom-scrollbar__light();
-  background: $background;
-  color: $color;
-  @media #{$isDark} {
-    @include custom-scrollbar__dark();
-    background: $background_dark;
-    color: $color_dark;
-  }
+  @include custom-scrollbar__dark();
+  background: $background_dark;
+  color: $color_dark;
 }
+
 body {
   min-height: 100vh;
   margin: 0;

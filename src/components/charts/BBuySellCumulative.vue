@@ -75,11 +75,11 @@ export default class BBuySellCumulative extends Vue {
   }
 
   get buySeries(): { x: number; y: number }[] {
-    return this.uniqueBuyLimits.map(x => {
+    return this.uniqueBuyLimits.map(y => {
       return {
-        x: x,
-        y: this.buyOrders
-          .filter(o => !o.limit || o.limit >= x)
+        y: y,
+        x: this.buyOrders
+          .filter(o => !o.limit || o.limit >= y)
           .map(o => o.amount)
           .reduce((a, b) => a + b, 0)
       };
@@ -87,11 +87,11 @@ export default class BBuySellCumulative extends Vue {
   }
 
   get sellSeries(): { x: number; y: number }[] {
-    return this.uniqueSellLimits.map(x => {
+    return this.uniqueSellLimits.map(y => {
       return {
-        x: x,
-        y: this.sellOrders
-          .filter(o => !o.limit || o.limit <= x)
+        y: y,
+        x: this.sellOrders
+          .filter(o => !o.limit || o.limit <= y)
           .map(o => o.amount)
           .reduce((a, b) => a + b, 0)
       };
