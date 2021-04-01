@@ -2,7 +2,7 @@
   <div class="view-options" content>
     <h1>Options</h1>
 
-    <tl-grid>
+    <tl-grid gap="0 20">
       <div>
         <h4>Share Managemenet</h4>
         <tc-list :dark="true">
@@ -34,13 +34,29 @@
           />
         </tc-list>
       </div>
+      <div>
+        <h4>Market Managemenet</h4>
+        <tc-list :dark="true">
+          <tc-list-item icon="blocked" title="Close market" />
+          <tc-list-item icon="checkbox" title="Open market" />
+        </tc-list>
+      </div>
+      <div>
+        <h4>Pricing Management</h4>
+        <tc-list :dark="true">
+          <tc-list-item
+            icon="dollar"
+            title="Pricing overview"
+            routeName="mgmt-pricings"
+          />
+          <tc-list-item
+            icon="plus"
+            title="Create pricing"
+            routeName="mgmt-create-pricing"
+          />
+        </tc-list>
+      </div>
     </tl-grid>
-
-    <h4>Market Managemenet</h4>
-    <tc-list :dark="true">
-      <tc-list-item icon="blocked" title="Close market" />
-      <tc-list-item icon="checkbox" title="Open market" />
-    </tc-list>
   </div>
 </template>
 

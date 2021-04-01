@@ -2,6 +2,7 @@
 import { socket } from '@/main';
 import { getToken } from '@/utils/auth';
 import { Broker, BrokerManager } from '@/utils/BrokerManager';
+import { Pricing } from '@/utils/PricingManager';
 import { Share, ShareManager } from '@/utils/ShareManager';
 import { Order } from 'moonstonks-boersenapi';
 import Vue from 'vue';
@@ -16,7 +17,8 @@ const store = new Vuex.Store({
     userValidated: false,
     shares: null,
     brokers: null,
-    orderbook: null
+    orderbook: null,
+    pricings: null
   },
   getters: {
     isDesktop: (state: any): boolean => {
@@ -36,6 +38,9 @@ const store = new Vuex.Store({
     },
     orderbook: (state: any): Order[] | null => {
       return state.orderbook;
+    },
+    pricings: (state: any): Pricing[] | null => {
+      return state.pricings;
     }
   },
   mutations: {
@@ -63,6 +68,9 @@ const store = new Vuex.Store({
     },
     orderbook(state: any, orderbook: Order[]) {
       state.orderbook = orderbook;
+    },
+    pricings(state: any, pricings: Pricing[]) {
+      state.pricings = pricings;
     }
   }
 });

@@ -133,6 +133,44 @@ const router = new VueRouter({
               }
             }
           ]
+        },
+        {
+          path: 'pricings',
+          component: EmptyRouter,
+          children: [
+            {
+              path: '',
+              name: 'mgmt-pricings',
+              component: () => import('@/views/options/pricing/Pricings.vue'),
+              meta: {
+                title: 'Pricings',
+                prevName: 'options',
+                prevTitle: 'Options'
+              }
+            },
+            {
+              path: 'edit/:id',
+              name: 'mgmt-edit-pricing',
+              component: () =>
+                import('@/views/options/pricing/EditPricing.vue'),
+              meta: {
+                title: 'Edit Pricing',
+                prevName: 'mgmt-pricings',
+                prevTitle: 'Pricings'
+              }
+            },
+            {
+              path: 'create',
+              name: 'mgmt-create-pricing',
+              component: () =>
+                import('@/views/options/pricing/CreatePricing.vue'),
+              meta: {
+                title: 'Create Pricing',
+                prevName: 'mgmt-pricings',
+                prevTitle: 'Pricings'
+              }
+            }
+          ]
         }
       ]
     },
