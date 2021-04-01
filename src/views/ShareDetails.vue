@@ -28,7 +28,7 @@
           <i class="ti-blocked"></i>
         </BChartWrapper>
         <BChartWrapper title="Price" subtitle="Reference">
-          <BAnimatedNumber :number="share.price" />
+          <BAnimatedNumber :number="share.price * 100" :divider="100" />
           <span>€</span>
           <i class="ti-dollar"></i>
         </BChartWrapper>

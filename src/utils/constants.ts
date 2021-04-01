@@ -1,6 +1,9 @@
 export const backendUrl = 'https://boerse.moonstonks.space/';
 export const socketUrl = 'http://privat.moonstonks.space:16001/';
 
+// export const backendUrl = 'http://localhost:3000/';
+// export const socketUrl = 'http://localhost:3000/';
+
 export const periods = [
   { title: '1H', amount: 1000 * 60 * 60 },
   { title: '1D', amount: 1000 * 60 * 60 * 24 },

@@ -12,7 +12,7 @@ import './registerServiceWorker';
 import { getUserFromJWT, verfiyUser } from './utils/auth';
 import { socketUrl } from './utils/constants';
 
-const socket = io(socketUrl);
+export const socket = io(socketUrl);
 Vue.use(VueSocketIOExt, socket);
 
 Vue.config.productionTip = false;

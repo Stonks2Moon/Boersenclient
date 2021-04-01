@@ -17,6 +17,19 @@
             <tc-th>Stop</tc-th>
             <tc-th>Datum</tc-th>
           </tc-tr>
+          <tc-tr :key="s.id + 'tS'">
+            <tc-td></tc-td>
+            <tc-td></tc-td>
+            <tc-td>
+              ... {{ Math.max(getTotalBuyOrders(s.id) - 10, 0) }} more
+            </tc-td>
+            <tc-td></tc-td>
+            <tc-td>
+              ... {{ Math.max(getTotalSellOrders(s.id) - 10, 0) }} more
+            </tc-td>
+            <tc-td></tc-td>
+            <tc-td></tc-td>
+          </tc-tr>
           <tc-tr v-for="so in getSellOrders(s.id)" :key="so.id">
             <tc-td></tc-td>
             <tc-td></tc-td>
@@ -62,6 +75,18 @@ export default class Orderbook extends Vue {
     return this.$store.getters.shares;
   }
 
+  getTotalSellOrders(shareId: string): number {
+    return (this.orders || []).filter(
+      x => x.shareId === shareId && x.type === 'sell'
+    ).length;
+  }
+
+  getTotalBuyOrders(shareId: string): number {
+    return (this.orders || []).filter(
+      x => x.shareId === shareId && x.type === 'buy'
+    ).length;
+  }
+
   getSellOrders(shareId: string): Order[] {
     if (!this.orders) return [];
     return this.orders
@@ -71,7 +96,10 @@ export default class Orderbook extends Vue {
         if (a.limit === b.limit || !(a.limit && b.limit))
           return b.timestamp - a.timestamp;
         return (b.limit || 0) - (a.limit || 0);
-      });
+      })
+      .reverse()
+      .filter((_, i) => i < 10)
+      .reverse();
   }
 
   getBuyOrders(shareId: string): Order[] {
@@ -83,7 +111,8 @@ export default class Orderbook extends Vue {
         if (a.limit === b.limit || !(a.limit && b.limit))
           return a.timestamp - b.timestamp;
         return (b.limit || 0) - (a.limit || 0);
-      });
+      })
+      .filter((_, i) => i < 10);
   }
 
   formatTime(timestamp: number): string {

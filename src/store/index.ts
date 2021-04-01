@@ -1,4 +1,6 @@
 /* eslint-disable */
+import { socket } from '@/main';
+import { getToken } from '@/utils/auth';
 import { Broker, BrokerManager } from '@/utils/BrokerManager';
 import { Share, ShareManager } from '@/utils/ShareManager';
 import { Order } from 'moonstonks-boersenapi';
@@ -48,6 +50,7 @@ const store = new Vuex.Store({
       if (user && user.type === 'stockmarket') {
         state.user = user;
         state.userValidated = true;
+        socket.emit('join', getToken());
         ShareManager.loadShares();
         BrokerManager.loadBrokers();
       }

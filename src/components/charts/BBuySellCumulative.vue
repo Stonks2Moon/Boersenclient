@@ -75,11 +75,11 @@ export default class BBuySellCumulative extends Vue {
   }
 
   get buySeries(): { x: number; y: number }[] {
-    return this.uniqueBuyLimits.map(y => {
+    return this.uniqueBuyLimits.map(x => {
       return {
-        y: y,
-        x: this.buyOrders
-          .filter(o => !o.limit || o.limit >= y)
+        x: x,
+        y: this.buyOrders
+          .filter(o => !o.limit || o.limit >= x)
           .map(o => o.amount)
           .reduce((a, b) => a + b, 0)
       };
@@ -87,11 +87,11 @@ export default class BBuySellCumulative extends Vue {
   }
 
   get sellSeries(): { x: number; y: number }[] {
-    return this.uniqueSellLimits.map(y => {
+    return this.uniqueSellLimits.map(x => {
       return {
-        y: y,
-        x: this.sellOrders
-          .filter(o => !o.limit || o.limit <= y)
+        x: x,
+        y: this.sellOrders
+          .filter(o => !o.limit || o.limit <= x)
           .map(o => o.amount)
           .reduce((a, b) => a + b, 0)
       };
@@ -127,17 +127,23 @@ export default class BBuySellCumulative extends Vue {
           autoScaleYaxis: true
         }
       },
+      dataLabels: {
+        enabled: false
+      },
       xaxis: {
-        type: 'numeric'
+        type: 'numeric',
+        forceNiceScale: true,
+        labels: {
+          formatter: (value: string) => Math.round(+value * 100) / 100 + '€'
+        }
       },
       tooltip: {
-        y: {
+        x: {
           formatter: (name: string) => 'for at least ' + name + '€'
         }
       },
       yaxis: {
-        forceNiceScale: true,
-        labels: { formatter: (value: string) => value + '€' }
+        forceNiceScale: true
       },
       colors: ['#25ca49', '#ff4757'],
       stroke: { lineCap: 'round', width: 2, curve: 'smooth' },
