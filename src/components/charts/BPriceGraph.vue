@@ -94,7 +94,7 @@ export default class BPriceGraph extends Vue {
         labels: { formatter: (value: string) => value + '€' }
       },
       colors: this.shares.map(x => x.color),
-      stroke: { lineCap: 'round', width: 2, curve: 'stepline' },
+      stroke: { lineCap: 'round', width: 2, curve: 'straight' },
       tooltip: {
         x: { format: 'dd. MMM yyyy HH:mm:ss' }
       },
@@ -119,9 +119,11 @@ export default class BPriceGraph extends Vue {
     return shares.map(x => {
       return {
         name: x.name,
-        data: x.prices.map(p => {
-          return [p.timestamp, p.price];
-        })
+        data: x.prices
+          .sort((a, b) => a.timestamp - b.timestamp)
+          .map(p => {
+            return [p.timestamp, p.price];
+          })
       };
     });
   }

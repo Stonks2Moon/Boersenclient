@@ -143,7 +143,10 @@ export default class BBuySellCumulative extends Vue {
         }
       },
       yaxis: {
-        forceNiceScale: true
+        forceNiceScale: true,
+        labels: {
+          formatter: (value: string) => Math.round(+value)
+        }
       },
       colors: ['#25ca49', '#ff4757'],
       stroke: { lineCap: 'round', width: 2, curve: 'smooth' },

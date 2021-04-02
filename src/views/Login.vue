@@ -5,13 +5,14 @@
         <img src="pwa/moonstonks.svg" alt="" />
         <h1>Börsenclient</h1>
 
-        <tc-input placeholder="Enter Token" v-model="token" :dark="true" />
+        <tc-input placeholder="Enter Your Token" v-model="token" :dark="true" />
         <tc-button
           :disabled="submitting"
           variant="filled"
           tfbackground="error"
           name="Anmelden"
           icon="login"
+          iconPosition="right"
           @click="login"
         />
       </div>

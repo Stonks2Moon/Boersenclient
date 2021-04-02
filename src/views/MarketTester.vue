@@ -79,7 +79,7 @@ export default class MarketTester extends Vue {
     this.orderManager
       .placeOrder(
         type,
-        '6037e67c8407c737441517d6',
+        '6046b43b6008b9436c4f458d',
         +this.amount,
         +this.limit,
         +this.stop
