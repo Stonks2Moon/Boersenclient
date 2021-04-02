@@ -22,8 +22,10 @@
 import BPriceGraph from '@/components/charts/BPriceGraph.vue';
 import BList from '@/components/list/BList.vue';
 import BListItem from '@/components/list/BListItem.vue';
-import { Share, ShareManager } from '@/utils/ShareManager';
+import { ShareManager } from '@/utils/ShareManager';
 import { Vue, Component } from 'vue-property-decorator';
+
+import { Share } from 'moonstonks-boersenapi';
 
 @Component({
   components: {

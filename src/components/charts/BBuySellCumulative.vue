@@ -1,6 +1,6 @@
 <template>
   <BChartWrapper
-    v-if="ordersOfShare.length > 0"
+    v-if="orders.length > 0"
     class="view-b-buy-sell-cumulative"
     subtitle="Buy & Sell"
     title="Cumulative Orders"
@@ -17,11 +17,13 @@
 </template>
 
 <script lang="ts">
-import { Share, ShareManager } from '@/utils/ShareManager';
-import { Order } from 'moonstonks-boersenapi';
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import BChartWrapper from './BChartWrapper.vue';
 import VueApexCharts from 'vue-apexcharts';
+
+import { LimitAndAmount } from '@/utils/OrderbookManager';
+import backend from '@/utils/backend';
+import { EventBus } from '@/utils/eventbus';
 
 @Component({
   components: {
@@ -32,46 +34,44 @@ import VueApexCharts from 'vue-apexcharts';
 export default class BBuySellCumulative extends Vue {
   @Prop() shareId!: string;
 
-  @Watch('orders', { deep: true, immediate: true })
-  updateChart() {
-    // eslint-disable-next-line
-    const elem = this.$refs.BBuySellCumulative as any;
-    if (elem) elem.updateSeries(this.series, true);
+  public orders: LimitAndAmount[] = [];
+
+  mounted() {
+    this.loadData();
+    EventBus.$on('order-book-updated', (shareId: string) => {
+      if (this.shareId === shareId) {
+        this.loadData();
+      }
+    });
   }
 
-  get share(): Share | null {
-    return ShareManager.getShare(this.shareId);
+  public loadData(): void {
+    if (this.shareId) {
+      backend.get('orderbook/limitsAndAmounts/' + this.shareId).then(res => {
+        this.orders = res.data;
+        // eslint-disable-next-line
+        const elem = this.$refs.BBuySellCumulative as any;
+        if (elem) elem.updateSeries(this.series, true);
+      });
+    }
   }
 
-  get orders(): Order[] | null {
-    return this.$store.getters.orderbook;
+  get sellOrders(): LimitAndAmount[] {
+    return this.orders.filter(o => o.type === 'sell');
   }
 
-  get ordersOfShare(): Order[] {
-    if (!this.share) return [];
-    return (this.orders || []).filter(o => o.shareId === this.shareId);
-  }
-
-  get sellOrders(): Order[] {
-    return this.ordersOfShare.filter(o => o.type === 'sell');
-  }
-
-  get buyOrders(): Order[] {
-    return this.ordersOfShare.filter(o => o.type === 'buy');
+  get buyOrders(): LimitAndAmount[] {
+    return this.orders.filter(o => o.type === 'buy');
   }
 
   get uniqueBuyLimits(): number[] {
-    return [
-      // eslint-disable-next-line
-      ...new Set(this.buyOrders.map(x => x.limit || this.share!.price))
-    ].sort((a, b) => a - b);
+    return [...new Set(this.buyOrders.map(x => x.limit))].sort((a, b) => a - b);
   }
 
   get uniqueSellLimits(): number[] {
-    return [
-      // eslint-disable-next-line
-      ...new Set(this.sellOrders.map(x => x.limit || this.share!.price))
-    ].sort((a, b) => b - a);
+    return [...new Set(this.sellOrders.map(x => x.limit))].sort(
+      (a, b) => b - a
+    );
   }
 
   get buySeries(): { x: number; y: number }[] {

@@ -28,7 +28,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import backend from '@/utils/backend';
-import { Share, ShareManager } from '@/utils/ShareManager';
+import { ShareManager } from '@/utils/ShareManager';
+
+import { Share } from 'moonstonks-boersenapi';
 
 @Component
 export default class EditShare extends Vue {

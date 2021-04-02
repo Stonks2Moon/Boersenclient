@@ -1,5 +1,5 @@
 import store from '@/store';
-import { Price } from 'moonstonks-boersenapi/dist/models/Price.model';
+import { Price, Share } from 'moonstonks-boersenapi';
 import backend from './backend';
 export class ShareManager {
   private static commit(shares: Share[]): void {
@@ -8,24 +8,9 @@ export class ShareManager {
   }
 
   public static async loadShares(): Promise<void> {
-    let shares = this.shares;
-    if (shares) return;
+    if (this.shares) return;
     const { data } = await backend.get('share');
-    shares = data;
-    if (shares) {
-      shares = shares.map(x => {
-        x.prices = [];
-        return x;
-      });
-
-      shares = await Promise.all(
-        shares.map(async x => {
-          x.prices = (await backend.get('share/prices/' + x.id)).data;
-          return x;
-        })
-      );
-      this.commit(shares);
-    }
+    if (data) this.commit(data);
   }
 
   public static get shares(): Share[] | null {
@@ -39,45 +24,28 @@ export class ShareManager {
   }
 
   public static updateShare(share: Share): void {
-    let shares = this.shares;
-    if (!shares) return;
+    let shares = this.shares || [];
+    let exists = false;
     shares = shares.map(x => {
       if (x.id === share.id) {
-        return { ...x, ...share };
+        exists = true;
+        return share;
       }
       return x;
     });
+    if (!exists) shares.push(share);
     this.commit(shares);
   }
 
-  public static addPrice(price: Price & { shareId: string }) {
+  public static priceChanged(update: Price & { shareId: string }) {
     let shares = this.shares;
     if (!shares) return;
     shares = shares.map(x => {
-      if (x.id === price.shareId) {
-        x.prices.push({ price: price.price, timestamp: price.timestamp });
-        x.price = price.price;
+      if (x.id === update.shareId) {
+        x.price = update.price;
       }
       return x;
     });
     this.commit(shares);
   }
-
-  public static createShare(share: Share): void {
-    let shares = this.shares;
-    const createShare: Share = { ...share, prices: [] };
-    if (!shares) shares = [createShare];
-    else shares.push(createShare);
-
-    this.commit(shares);
-  }
-}
-
-export interface Share {
-  id: string;
-  name: string;
-  color: string;
-  thumbnail: string;
-  price: number;
-  prices: Price[];
 }

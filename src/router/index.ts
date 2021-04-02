@@ -31,15 +31,6 @@ const router = new VueRouter({
         prevTitle: 'Home'
       }
     },
-
-    {
-      path: '/orderbook',
-      name: 'orderbook',
-      component: () => import('@/views/Orderbook.vue'),
-      meta: {
-        title: 'Orderbook'
-      }
-    },
     {
       path: '/market-tester',
       name: 'market-tester',

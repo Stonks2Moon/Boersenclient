@@ -12,19 +12,17 @@
       :options="options"
       :series="series"
     />
-
-    <tc-segments :dark="true" v-model="activePeriod">
-      <tc-segment-item v-for="p in periods" :key="p.title" :title="p.title" />
-    </tc-segments>
   </BChartWrapper>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import VueApexCharts from 'vue-apexcharts';
-import { Share, ShareManager } from '@/utils/ShareManager';
+import { ShareManager } from '@/utils/ShareManager';
 import BChartWrapper from '@/components/charts/BChartWrapper.vue';
-import { periods } from '@/utils/constants';
+
+import { Price, Share } from 'moonstonks-boersenapi';
+import { PriceHistoryManager } from '@/utils/PriceHistoryManager';
 
 @Component({
   components: {
@@ -33,9 +31,6 @@ import { periods } from '@/utils/constants';
   }
 })
 export default class BPriceGraph extends Vue {
-  public activePeriod = 3;
-  public periods = periods;
-
   @Watch('shares', { deep: true, immediate: true })
   updateChart() {
     // eslint-disable-next-line
@@ -43,26 +38,8 @@ export default class BPriceGraph extends Vue {
     if (elem) elem.updateSeries(this.series, true);
   }
 
-  get range(): number {
-    return periods[this.activePeriod].amount;
-  }
-
-  get firstTS(): number {
-    const first = [...this.shares]
-      .map(x => x.prices)
-      .flat()
-      .sort((a, b) => a.timestamp - b.timestamp)[0];
-    if (!first) return 0;
-    return first.timestamp;
-  }
-
-  get lastTS(): number {
-    const last = [...this.shares]
-      .map(x => x.prices)
-      .flat()
-      .sort((a, b) => b.timestamp - a.timestamp)[0];
-    if (!last) return Date.now();
-    return last.timestamp;
+  get histories(): Record<string, Price[]> {
+    return PriceHistoryManager.histories;
   }
 
   get shares(): Share[] {
@@ -72,7 +49,7 @@ export default class BPriceGraph extends Vue {
   get options() {
     return {
       chart: {
-        toolbar: { show: false },
+        toolbar: { show: true },
         parentHeightOffset: 0,
         background: 'transparent',
         foreColor: '#fff',
@@ -80,14 +57,12 @@ export default class BPriceGraph extends Vue {
         stacked: false,
         zoom: {
           type: 'x',
-          enabled: false,
+          enabled: true,
           autoScaleYaxis: true
         }
       },
       xaxis: {
-        type: 'datetime',
-        max: this.lastTS,
-        range: Math.min(this.range, this.lastTS - this.firstTS)
+        type: 'datetime'
       },
       yaxis: {
         forceNiceScale: true,
@@ -115,11 +90,12 @@ export default class BPriceGraph extends Vue {
   get series() {
     const shares = this.shares;
     if (!shares) return [];
-
     return shares.map(x => {
       return {
         name: x.name,
-        data: x.prices
+        data: (this.histories[x.id] || [])
+          .sort((a, b) => b.timestamp - a.timestamp)
+          .filter((_, i) => i < 300)
           .sort((a, b) => a.timestamp - b.timestamp)
           .map(p => {
             return [p.timestamp, p.price];
@@ -132,8 +108,6 @@ export default class BPriceGraph extends Vue {
 
 <style lang="scss" scoped>
 .b-price-graph {
-  .tc-segments {
-    margin-top: 20px;
-  }
+  //
 }
 </style>

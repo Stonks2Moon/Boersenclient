@@ -31,12 +31,6 @@
         tfcolor="error"
       />
       <tc-navbar-item
-        icon="book-filled"
-        name="Orderbook"
-        routeName="orderbook"
-        tfcolor="error"
-      />
-      <tc-navbar-item
         icon="file-text"
         name="Clearing"
         routeName="clearing"

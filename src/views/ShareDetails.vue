@@ -12,29 +12,33 @@
       </tl-flow>
     </tc-hero>
 
-    <div content v-if="share">
+    <div content>
       <br />
       <tl-grid minWidth="170" gap="20">
-        <BChartWrapper title="Sell Orders" subtitle="Total">
-          <BAnimatedNumber :number="sellAmount" />
+        <BChartWrapper v-if="orderbook" title="Sell Orders" subtitle="Total">
+          <BAnimatedNumber :number="orderbook.totalSellOrders" />
           <i class="ti-offer"></i>
         </BChartWrapper>
-        <BChartWrapper title="Buy Orders" subtitle="Total">
-          <BAnimatedNumber :number="buyAmount" />
+        <BChartWrapper v-if="orderbook" title="Buy Orders" subtitle="Total">
+          <BAnimatedNumber :number="orderbook.totalBuyOrders" />
           <i class="ti-bell"></i>
         </BChartWrapper>
-        <BChartWrapper title="Stops" subtitle="Active">
-          <BAnimatedNumber :number="stopCount" />
+        <BChartWrapper v-if="orderbook" title="Stops" subtitle="Active">
+          <BAnimatedNumber :number="orderbook.totalStopOrders" />
           <i class="ti-blocked"></i>
         </BChartWrapper>
-        <BChartWrapper title="Price" subtitle="Reference">
+        <BChartWrapper v-if="share" title="Price" subtitle="Reference">
           <BAnimatedNumber :number="share.price * 100" :divider="100" />
           <span>€</span>
           <i class="ti-dollar"></i>
         </BChartWrapper>
       </tl-grid>
+
       <br />
       <BBuySellCumulative :shareId="id" />
+
+      <br />
+      <BOrderbook :shareId="id" />
     </div>
   </div>
 </template>
@@ -43,15 +47,18 @@
 import BAnimatedNumber from '@/components/BAnimatedNumber.vue';
 import BBuySellCumulative from '@/components/charts/BBuySellCumulative.vue';
 import BChartWrapper from '@/components/charts/BChartWrapper.vue';
-import { Share, ShareManager } from '@/utils/ShareManager';
-import { Order } from 'node_modules/moonstonks-boersenapi/dist/main';
+import BOrderbook from '@/components/charts/BOrderbook.vue';
+import { Orderbook, OrderbookManager } from '@/utils/OrderbookManager';
+import { ShareManager } from '@/utils/ShareManager';
+import { Share } from 'moonstonks-boersenapi';
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
   components: {
     BBuySellCumulative,
     BAnimatedNumber,
-    BChartWrapper
+    BChartWrapper,
+    BOrderbook
   }
 })
 export default class ShareDetails extends Vue {
@@ -59,30 +66,12 @@ export default class ShareDetails extends Vue {
     return this.$route.params.id;
   }
 
+  get orderbook(): Orderbook | null {
+    return OrderbookManager.getBook(this.id);
+  }
+
   get share(): Share | null {
     return ShareManager.getShare(this.id);
-  }
-
-  get orders(): Order[] | null {
-    return this.$store.getters.orderbook;
-  }
-
-  get ordersOfShare(): Order[] {
-    if (!this.share) return [];
-    // eslint-disable-next-line
-    return (this.orders || []).filter(o => o.shareId === this.share!.id);
-  }
-
-  get buyAmount(): number {
-    return this.ordersOfShare.filter(x => x.type === 'buy').length;
-  }
-
-  get sellAmount(): number {
-    return this.ordersOfShare.filter(x => x.type === 'sell').length;
-  }
-
-  get stopCount(): number {
-    return this.ordersOfShare.filter(x => x.stop).length;
   }
 }
 </script>

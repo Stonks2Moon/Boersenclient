@@ -12,13 +12,13 @@ import { Vue, Component } from 'vue-property-decorator';
 import BRouter from './components/BRouter.vue';
 import BNavbar from './components/BNavbar.vue';
 import { Price } from 'moonstonks-boersenapi';
-import { ShareManager } from '@/utils/ShareManager';
 import BTabbar from './components/BTabbar.vue';
 import {
   registerMediaQueries,
   unregisterMediaQueries
 } from '@/utils/mediaQueries';
-import backend from './utils/backend';
+import { PriceHistoryManager } from './utils/PriceHistoryManager';
+import { OrderbookManager } from './utils/OrderbookManager';
 
 @Component({
   components: {
@@ -30,7 +30,6 @@ import backend from './utils/backend';
 export default class App extends Vue {
   mounted() {
     registerMediaQueries();
-    this.loadOrderbook();
   }
 
   beforeDestroy() {
@@ -39,13 +38,12 @@ export default class App extends Vue {
 
   @Socket('price')
   priceChanged(price: Price & { shareId: string }): void {
-    ShareManager.addPrice(price);
+    PriceHistoryManager.priceChanged(price.shareId, price);
   }
 
   @Socket('update-orderbook')
-  public async loadOrderbook(): Promise<void> {
-    const { data } = await backend.get('order/orders');
-    this.$store.commit('orderbook', data);
+  public async loadOrderbook(shareId: string): Promise<void> {
+    OrderbookManager.loadBook(shareId);
   }
 }
 </script>

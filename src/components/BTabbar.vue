@@ -10,12 +10,6 @@
       tfcolor="error"
     />
     <tc-tabbar-item
-      icon="book-filled"
-      title="Orderbook"
-      routeName="orderbook"
-      tfcolor="error"
-    />
-    <tc-tabbar-item
       icon="file-text"
       title="Clearing"
       routeName="clearing"
