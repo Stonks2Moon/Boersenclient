@@ -53,7 +53,7 @@ export class BrokerManager {
 export interface Broker {
   id: string;
   token: string;
-  type: 'private' | 'business' | 'simulation' | 'stockmarket';
+  type: 'private' | 'business' | 'simulation' | 'stockmarket' | 'liquiditydonor';
   displayName: string;
   banned?: boolean;
 }
