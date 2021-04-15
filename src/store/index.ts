@@ -76,7 +76,7 @@ const store = new Vuex.Store({
     },
     priceHistories(state: any, priceHistories: Record<string, Price[]>) {
       state.priceHistories = priceHistories;
-      console.log('Storing history', state.priceHistories);
+      // console.log('Storing history', state.priceHistories);
     },
     brokers(state: any, brokers: Broker[]) {
       state.brokers = brokers;
