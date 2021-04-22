@@ -2,6 +2,8 @@
 import { socket } from '@/main';
 import { getToken } from '@/utils/auth';
 import { Broker, BrokerManager } from '@/utils/BrokerManager';
+import { ClearingManager, DailyClearing } from '@/utils/ClearingManager';
+import { Invoice, InvoiceManager } from '@/utils/InvoiceManager';
 import { Orderbook, OrderbookManager } from '@/utils/OrderbookManager';
 import { PriceHistoryManager } from '@/utils/PriceHistoryManager';
 import { Pricing, PricingManager } from '@/utils/PricingManager';
@@ -21,7 +23,9 @@ const store = new Vuex.Store({
     priceHistories: {},
     brokers: null,
     orderbooks: null,
-    pricings: null
+    pricings: null,
+    invoices: null,
+    dailyClearings: null
   },
   getters: {
     isDesktop: (state: any): boolean => {
@@ -47,6 +51,12 @@ const store = new Vuex.Store({
     },
     pricings: (state: any): Pricing[] | null => {
       return state.pricings;
+    },
+    invoices: (state: any): Invoice[] | null => {
+      return state.invoices;
+    },
+    dailyClearings: (state: any): DailyClearing[] | null => {
+      return state.dailyClearings;
     }
   },
   mutations: {
@@ -62,7 +72,10 @@ const store = new Vuex.Store({
         state.user = user;
         state.userValidated = true;
         socket.emit('join', getToken());
-        BrokerManager.loadBrokers();
+        BrokerManager.loadBrokers().then(() => {
+          InvoiceManager.loadInvoices();
+          ClearingManager.loadDailyClearings();
+        });
         ShareManager.loadShares().then(() => {
           OrderbookManager.loadBooks();
           PriceHistoryManager.loadHistories();
@@ -76,7 +89,6 @@ const store = new Vuex.Store({
     },
     priceHistories(state: any, priceHistories: Record<string, Price[]>) {
       state.priceHistories = priceHistories;
-      console.log('Storing history', state.priceHistories);
     },
     brokers(state: any, brokers: Broker[]) {
       state.brokers = brokers;
@@ -86,6 +98,12 @@ const store = new Vuex.Store({
     },
     pricings(state: any, pricings: Pricing[]) {
       state.pricings = pricings;
+    },
+    invoices(state: any, invoices: Invoice[]) {
+      state.invoices = invoices;
+    },
+    dailyClearings(state: any, dailyClearings: DailyClearing[]) {
+      state.dailyClearings = dailyClearings;
     }
   }
 });

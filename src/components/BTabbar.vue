@@ -16,6 +16,12 @@
       tfcolor="error"
     />
     <tc-tabbar-item
+      icon="dollar"
+      title="Invoice"
+      routeName="invoice"
+      tfcolor="error"
+    />
+    <tc-tabbar-item
       icon="gears"
       title="Options"
       routeName="options"

@@ -14,8 +14,6 @@ export class PriceHistoryManager {
   }
 
   public static loadHistory(shareId: string) {
-    console.log('Loading History for', shareId);
-
     backend.get('share/prices/' + shareId).then(res => {
       if (res.data) this.historyChanged(shareId, res.data);
     });

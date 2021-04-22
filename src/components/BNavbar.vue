@@ -37,6 +37,13 @@
         tfcolor="error"
       />
       <tc-navbar-item
+        icon="dollar"
+        name="Invoice"
+        routeName="invoice"
+        tfcolor="error"
+      />
+
+      <tc-navbar-item
         icon="gears"
         name="Options"
         routeName="options"

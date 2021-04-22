@@ -4,6 +4,10 @@ import backend from './backend';
 export class ShareManager {
   private static commit(shares: Share[]): void {
     if (!shares) return;
+    shares = shares.filter(
+      x =>
+        !['607ecd14483d7e013aecf4fd', '607ef2ff483d7eea8bed4eb2'].includes(x.id)
+    );
     store.commit('shares', shares);
   }
 

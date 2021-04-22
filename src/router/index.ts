@@ -176,6 +176,15 @@ const router = new VueRouter({
     },
 
     {
+      path: '/invoice',
+      name: 'invoice',
+      component: () => import('@/views/invoice/Invoice.vue'),
+      meta: {
+        title: 'Invoice'
+      }
+    },
+
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/Login.vue'),
