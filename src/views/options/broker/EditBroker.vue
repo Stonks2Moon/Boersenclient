@@ -29,6 +29,10 @@
           :defaultSelected="broker.type === 'simulation'"
         />
         <tc-select-item
+          title="liquiditydonor"
+          :defaultSelected="broker.type === 'liquiditydonor'"
+        />
+        <tc-select-item
           title="stockmarket"
           :defaultSelected="broker.type === 'stockmarket'"
         />

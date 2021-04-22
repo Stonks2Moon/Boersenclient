@@ -6,6 +6,6 @@ export class CreateShareDto {
 }
 
 export class CreateBrokerDto {
-  type!: 'private' | 'business' | 'simulation' | 'stockmarket';
+  type!: 'private' | 'business' | 'simulation' | 'stockmarket' | 'liquiditydonor';
   displayName!: string;
 }

@@ -26,6 +26,10 @@
         title="simulation"
         :defaultSelected="dto.type === 'simulation'"
       />
+      <tc-select-item
+        title="liquiditydonor"
+        :defaultSelected="dto.type === 'liquiditydonor'"
+      />
     </tc-select>
 
     <br />
