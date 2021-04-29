@@ -21,8 +21,8 @@
         <template slot="head">
           <tc-th>Monat</tc-th>
           <tc-th>Jahr</tc-th>
-          <tc-th>Buy Volume</tc-th>
-          <tc-th>Sell Volume</tc-th>
+          <tc-th>Amount</tc-th>
+          <tc-th>Information</tc-th>
         </template>
         <tc-tr
           v-for="i in invoices.filter(x => x.brokerId === b.id)"
@@ -59,6 +59,8 @@ export default class Invoice extends Vue {
   }
 
   format(n: number): string {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     return Intl.NumberFormat('en-GB', { notation: 'compact' }).format(n);
   }
 
